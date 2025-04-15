@@ -9,6 +9,7 @@ class Cell:
         self.screen = screen
         self.selected = False
         self.sketched_value = 0
+        self.given_value = False
     def set_cell_value(self, value):
         self.value = value
     def set_sketched_value(self, value):
@@ -33,6 +34,16 @@ class Cell:
                 )
             )
             self.screen.blit(final_value_surf, final_value_rect)
+        elif self.sketched_value != 0:
+            sketch_font = pygame.font.Font(None, SKETCH_FONT)
+            sketch_surf = sketch_font.render(str(self.sketched_value), 0, SKETCH_COLOR)
+            sketch_rect = sketch_surf.get_rect(
+                topleft=(
+                    self.col * SMALL_SQUARE_SIZE + 5,
+                    self.row * SMALL_SQUARE_SIZE + 5
+                )
+            )
+            self.screen.blit(sketch_surf, sketch_rect)
         if self.selected:
             pygame.draw.rect(
                 self.screen,
