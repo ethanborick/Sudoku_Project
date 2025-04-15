@@ -35,6 +35,8 @@ class Board:
             for j in range(BOARD_COLS):
                 self.cells[i][j].draw()
     def select(self, row, col):
+        if self.selected_cell:
+            self.selected_cell.selected = False
         self.cells[row][col].selected = True
         self.cells[row][col].draw()
         self.selected_cell = self.cells[row][col]
@@ -50,9 +52,18 @@ class Board:
     def sketch(self, value):
         if not self.selected_cell.given_value:
             self.selected_cell.set_sketched_value(value)
-
-
-
+    def place_number(self, value):
+        if self.selected_cell and not self.selected_cell.given_value:
+            self.selected_cell.set_cell_value(value)
+            self.selected_cell.selected = False
+            self.selected_cell = None
+    def reset_to_original(self):
+        self.selected_cell = None
+        for row in self.cells:
+            for cell in row:
+                if not cell.given_value:
+                    cell.sketched_value = 0
+                    cell.value = 0
 
 
 
