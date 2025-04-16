@@ -2,6 +2,7 @@
 import pygame, sys
 from constants import *
 from cell import *
+
 class Board:
     def __init__(self, width, height, screen, difficulty):
         self.width = width
@@ -36,6 +37,10 @@ class Board:
             for j in range(BOARD_COLS):
                 self.cells[i][j].draw()
     def select(self, row, col):
+        if not (0 <= row < 9 and 0 <= col < 9):
+            print(f"WARNING: Tried to select invalid cell ({row}, {col})")
+            return
+
         if self.selected_cell:
             self.selected_cell.selected = False
         self.cells[row][col].selected = True
@@ -80,10 +85,33 @@ class Board:
             for j in range(9):
                 if self.cells[i][j].value == 0:
                     return (i, j)
+
     def check_board(self):
-        pass
+        for row in self.cells:
+            for cell in row:
+                if cell.value == 0 and cell.sketched_value != 0:
+                    cell.value = cell.sketched_value
 
+        self.update_board()
+        for i, row in enumerate(self.board_values):
+            if sorted(row) != list(range(1, 10)):
+                print(f"[ROW FAIL] Row {i} = {row}")
+                return False
 
+        for col in range(9):
+            column = [self.board_values[row][col] for row in range(9)]
+            if sorted(column) != list(range(1, 10)):
+                print(f"[COL FAIL] Column {col} = {column}")
+                return False
 
+        for box_row in range(0, 9, 3):
+            for box_col in range(0, 9, 3):
+                box = []
+                for i in range(3):
+                    for j in range(3):
+                        box.append(self.board_values[box_row + i][box_col + j])
+                if sorted(box) != list(range(1, 10)):
+                    print(f"[BOX FAIL] Box starting at ({box_row},{box_col}) = {box}")
+                    return False
 
-
+        return True
