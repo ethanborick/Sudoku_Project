@@ -10,6 +10,7 @@ class Board:
         self.difficulty = difficulty
         self.cells = [[Cell(0, i , j, screen) for j in range(BOARD_COLS)] for i in range(BOARD_ROWS)]
         self.selected_cell = None
+        self.board_values = [[0 for i in range(BOARD_COLS)] for j in range(BOARD_ROWS)]
     def draw(self):
         for i in range(BOARD_ROWS + 1):
             line_thickness = BOLD_LINE_WIDTH if i % 3 == 0 else LINE_WIDTH
@@ -64,6 +65,24 @@ class Board:
                 if not cell.given_value:
                     cell.sketched_value = 0
                     cell.value = 0
+    def is_full(self):
+        for row in self.cells:
+            for cell in row:
+                if cell.value == 0:
+                    return False
+        return True
+    def update_board(self):
+        for i in range(9):
+            for j in range(9):
+                self.board_values[i][j] = self.cells[i][j].value
+    def find_empty(self):
+        for i in range(9):
+            for j in range(9):
+                if self.cells[i][j].value == 0:
+                    return (i, j)
+    def check_board(self):
+        pass
+
 
 
 
