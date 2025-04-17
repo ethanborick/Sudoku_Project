@@ -143,12 +143,12 @@ def main():
 
                 elif event.type == pygame.KEYDOWN:
                     if board.selected_cell:
-                        r, c = board.selected_cell
+                        selected = board.selected_cell
                         if event.unicode.isdigit() and event.unicode in "123456789":
                             board.sketch(int(event.unicode))
                         elif event.key == pygame.K_RETURN:
-                            if board.cells[r][c].sketched_value != 0:
-                                board.place_number(board.cells[r][c].sketched_value)
+                            if selected.sketched_value != 0:
+                                board.place_number(selected.sketched_value)
                         elif event.key == pygame.K_BACKSPACE:
                             board.clear()
 
