@@ -35,25 +35,37 @@ def starting_screen():
     background = pygame.image.load("background.jpg")
     screen.blit(pygame.transform.scale(background, (WIDTH, HEIGHT)), (0, 0))
 
-    title = pygame.font.Font(None, 80).render("Welcome to Sudoku", True, (0, 0, 0))
-    screen.blit(title, (WIDTH // 2 - title.get_width() // 2, HEIGHT // 6))
+    # 제목
+    title_font = pygame.font.Font(None, 100)
+    title_surf = title_font.render("Welcome to Sudoku", True, (0, 0, 0))
+    title_rect = title_surf.get_rect(center=(WIDTH // 2, 150))
+    screen.blit(title_surf, title_rect)
 
-    subtitle = pygame.font.Font(None, 50).render("Select Game Mode:", True, (0, 0, 0))
-    screen.blit(subtitle, (WIDTH // 2 - subtitle.get_width() // 2, HEIGHT // 2 - 50))
+    # 서브타이틀
+    select_game_mode_font = pygame.font.Font(None, 50)
+    select_game_mode_surf = select_game_mode_font.render("Select Game Mode:", True, (0, 0, 0))
+    select_game_mode_rect = select_game_mode_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(select_game_mode_surf, select_game_mode_rect)
 
-    y_pos = HEIGHT * 4 // 6
-    difficulties = ["Easy", "Medium", "Hard"]
+    # 버튼들
     rendered_buttons = []
 
-    for i, diff in enumerate(difficulties):
-        rect = pygame.Rect(WIDTH // 2 - 240 + i * 160, y_pos, 140, 60)
-        pygame.draw.rect(screen, (139, 69, 19), rect, border_radius=5)
-        pygame.draw.rect(screen, (255, 255, 255), rect.inflate(-8, -8), border_radius=5)
-        pygame.draw.rect(screen, (255, 140, 0), rect.inflate(-16, -16), border_radius=5)
+    difficulties = [
+        ("easy", WIDTH // 4),
+        ("medium", WIDTH // 2),
+        ("hard", 3 * WIDTH // 4)
+    ]
 
-        text = FONT.render(diff.upper(), True, (255, 255, 255))
-        screen.blit(text, (rect.x + rect.width // 2 - text.get_width() // 2, rect.y + rect.height // 2 - text.get_height() // 2))
-        rendered_buttons.append((rect, diff.lower()))
+    for diff, center_x in difficulties:
+        font = pygame.font.Font(None, 35)
+        surf = font.render(diff.capitalize(), True, (255, 255, 255))
+        rect = surf.get_rect(center=(center_x, 500))
+        outer_rect = rect.inflate(20, 10)
+
+        pygame.draw.rect(screen, (255, 165, 0), outer_rect)
+        screen.blit(surf, rect)
+
+        rendered_buttons.append((outer_rect, diff))
 
     pygame.display.flip()
     return rendered_buttons
@@ -142,7 +154,7 @@ def main():
 
                 elif event.type == pygame.KEYDOWN:
                     if board.selected_cell:
-                        r, c = board.selected_cell
+                        r, c = board.r, c = board.selected_cell.row, board.selected_cell.col
                         if event.unicode.isdigit() and event.unicode in "123456789":
                             board.sketch(int(event.unicode))
                         elif event.key == pygame.K_RETURN:
