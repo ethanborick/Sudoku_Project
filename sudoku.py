@@ -52,7 +52,8 @@ def starting_screen():
         pygame.draw.rect(screen, (255, 140, 0), rect.inflate(-16, -16), border_radius=5)
 
         text = FONT.render(diff.upper(), True, (255, 255, 255))
-        screen.blit(text, (rect.x + rect.width // 2 - text.get_width() // 2, rect.y + rect.height // 2 - text.get_height() // 2))
+        screen.blit(text, (
+        rect.x + rect.width // 2 - text.get_width() // 2, rect.y + rect.height // 2 - text.get_height() // 2))
         rendered_buttons.append((rect, diff.lower()))
 
     pygame.display.flip()
@@ -166,6 +167,7 @@ def main():
             pygame.time.wait(500)
             game_state = START
             buttons = starting_screen()
+
 
 if __name__ == "__main__":
     main()

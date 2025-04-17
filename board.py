@@ -3,15 +3,17 @@ import pygame, sys
 from constants import *
 from cell import *
 
+
 class Board:
     def __init__(self, width, height, screen, difficulty):
         self.width = width
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
-        self.cells = [[Cell(0, i , j, screen) for j in range(BOARD_COLS)] for i in range(BOARD_ROWS)]
+        self.cells = [[Cell(0, i, j, screen) for j in range(BOARD_COLS)] for i in range(BOARD_ROWS)]
         self.selected_cell = None
         self.board_values = [[0 for i in range(BOARD_COLS)] for j in range(BOARD_ROWS)]
+
     def draw(self):
         for i in range(BOARD_ROWS + 1):
             line_thickness = BOLD_LINE_WIDTH if i % 3 == 0 else LINE_WIDTH
@@ -36,6 +38,7 @@ class Board:
         for i in range(BOARD_ROWS):
             for j in range(BOARD_COLS):
                 self.cells[i][j].draw()
+
     def select(self, row, col):
         if not (0 <= row < 9 and 0 <= col < 9):
             print(f"WARNING: Tried to select invalid cell ({row}, {col})")
@@ -46,23 +49,28 @@ class Board:
         self.cells[row][col].selected = True
         self.cells[row][col].draw()
         self.selected_cell = self.cells[row][col]
+
     def click(self, x, y):
         if 0 <= x <= WIDTH and 0 <= y <= HEIGHT:
             row = y // SMALL_SQUARE_SIZE
             col = x // SMALL_SQUARE_SIZE
             return (row, col)
         return None
+
     def clear(self, row, col):
         if self.cells[row][col].value != 0:
             self.cells[row][col].set_cell_value(0)
+
     def sketch(self, value):
         if not self.selected_cell.given_value:
             self.selected_cell.set_sketched_value(value)
+
     def place_number(self, value):
         if self.selected_cell and not self.selected_cell.given_value:
             self.selected_cell.set_cell_value(value)
             self.selected_cell.selected = False
             self.selected_cell = None
+
     def reset_to_original(self):
         self.selected_cell = None
         for row in self.cells:
@@ -70,16 +78,19 @@ class Board:
                 if not cell.given_value:
                     cell.sketched_value = 0
                     cell.value = 0
+
     def is_full(self):
         for row in self.cells:
             for cell in row:
                 if cell.value == 0:
                     return False
         return True
+
     def update_board(self):
         for i in range(9):
             for j in range(9):
                 self.board_values[i][j] = self.cells[i][j].value
+
     def find_empty(self):
         for i in range(9):
             for j in range(9):
