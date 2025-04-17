@@ -78,7 +78,7 @@ def drawing_buttons(buttons_dict):
         ))
 
 
-def ending_game_screen(win):
+def drawing_end_screen(win):
     screen.fill((255, 255, 255))
     background = pygame.image.load("background.jpg")
     screen.blit(pygame.transform.scale(background, (WIDTH, HEIGHT)), (0, 0))
@@ -162,8 +162,8 @@ def main():
         elif game_state == PLAYING:
             starting_game_screen(board)
         elif game_state == GAMEOVER:
-            ending_game_screen(win)
-            pygame.time.wait(500)
+            drawing_end_screen(win)
+            pygame.time.wait(2000)
             game_state = START
             buttons = starting_screen()
 
