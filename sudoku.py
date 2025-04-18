@@ -150,7 +150,7 @@ def main():
                             if selected.sketched_value != 0:
                                 board.place_number(selected.sketched_value)
                         elif event.key == pygame.K_BACKSPACE:
-                            board.clear()
+                            board.clear(board.selected_cell.row, board.selected_cell.col)
 
             if game_state == PLAYING and board:
                 if board.is_full():
