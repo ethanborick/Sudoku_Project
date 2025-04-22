@@ -83,7 +83,7 @@ def ending_game_screen(win):
     screen.fill((255, 255, 255))
     background = pygame.image.load("background.jpg")
     screen.blit(pygame.transform.scale(background, (WIDTH, HEIGHT)), (0, 0))
-    msg = "You Win!" if win else "Game Over!"
+    msg = "You Win!" if win else "Game Over :("
     result_text = BIG_FONT.render(msg, True, (0, 0, 0))
     screen.blit(result_text, (WIDTH // 2 - result_text.get_width() // 2, HEIGHT // 3))
 
@@ -205,13 +205,13 @@ def main():
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         pos = pygame.mouse.get_pos()
                         if win:
-                            # Game Won → Exit
+                            # Game Won -> Exit
                             exit_rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT * 2 // 3, 150, 50)
                             if exit_rect.collidepoint(pos):
                                 pygame.quit()
                                 sys.exit()
                         else:
-                            # Game Over → Restart
+                            # Game Over -> Restart
                             restart_rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT * 2 // 3, 150, 50)
                             if restart_rect.collidepoint(pos):
                                 game_state = START
