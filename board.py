@@ -58,8 +58,10 @@ class Board:
         return None
 
     def clear(self, row, col):
-        if self.cells[row][col].value != 0:
-            self.cells[row][col].set_cell_value(0)
+        cell = self.cells[row][col]
+        if not cell.given_value:
+            cell.set_cell_value(0)
+            cell.set_sketched_value(0)
 
     def sketch(self, value):
         if not self.selected_cell.given_value:
