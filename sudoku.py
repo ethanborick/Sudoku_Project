@@ -152,6 +152,18 @@ def main():
                         elif event.key == pygame.K_BACKSPACE:
                             board.clear(board.selected_cell.row, board.selected_cell.col)
 
+                        elif event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                            row = selected.row
+                            col = selected.col
+                            if event.key == pygame.K_UP and row > 0:
+                                board.select(row - 1, col)
+                            elif event.key == pygame.K_DOWN and row < 8:
+                                board.select(row + 1, col)
+                            elif event.key == pygame.K_LEFT and col > 0:
+                                board.select(row, col - 1)
+                            elif event.key == pygame.K_RIGHT and col < 8:
+                                board.select(row, col + 1)
+
             if game_state == PLAYING and board:
                 if board.is_full():
                     board.update_board()
