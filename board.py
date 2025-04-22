@@ -68,8 +68,8 @@ class Board:
     def place_number(self, value):
         if self.selected_cell and not self.selected_cell.given_value:
             self.selected_cell.set_cell_value(value)
-            self.selected_cell.selected = False
-            self.selected_cell = None
+            # self.selected_cell.selected = False
+            # self.selected_cell = None
 
     def reset_to_original(self):
         self.selected_cell = None
