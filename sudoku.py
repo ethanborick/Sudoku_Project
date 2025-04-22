@@ -195,9 +195,28 @@ def main():
             starting_game_screen(board)
         elif game_state == GAMEOVER:
             ending_game_screen(win)
-            pygame.time.wait(500)
-            game_state = START
-            buttons = starting_screen()
+
+            waiting = True
+            while waiting:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        if win:
+                            # Game Won → Exit
+                            exit_rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT * 2 // 3, 150, 50)
+                            if exit_rect.collidepoint(pos):
+                                pygame.quit()
+                                sys.exit()
+                        else:
+                            # Game Over → Restart
+                            restart_rect = pygame.Rect(WIDTH // 2 - 75, HEIGHT * 2 // 3, 150, 50)
+                            if restart_rect.collidepoint(pos):
+                                game_state = START
+                                buttons = starting_screen()
+                                waiting = False
 
 
 if __name__ == "__main__":
