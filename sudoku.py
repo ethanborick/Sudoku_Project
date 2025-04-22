@@ -86,6 +86,25 @@ def ending_game_screen(win):
     msg = "You Win!" if win else "Game Over!"
     result_text = BIG_FONT.render(msg, True, (0, 0, 0))
     screen.blit(result_text, (WIDTH // 2 - result_text.get_width() // 2, HEIGHT // 3))
+
+    # Create Ending Button
+    button_rects = {}
+    if win:
+        button_rects["exit"] = pygame.Rect(WIDTH // 2 - 75, HEIGHT * 2 // 3, 150, 50)
+    else:
+        button_rects["restart"] = pygame.Rect(WIDTH // 2 - 75, HEIGHT * 2 // 3, 150, 50)
+
+    # Rendering the exit button
+    for name, rect in button_rects.items():
+        pygame.draw.rect(screen, (139, 69, 19), rect, border_radius=5)
+        pygame.draw.rect(screen, (255, 255, 255), rect.inflate(-8, -8), border_radius=5)
+        pygame.draw.rect(screen, (255, 140, 0), rect.inflate(-16, -16), border_radius=5)
+        text = FONT.render(name.capitalize(), True, (255, 255, 255))
+        screen.blit(text, (
+            rect.x + rect.width // 2 - text.get_width() // 2,
+            rect.y + rect.height // 2 - text.get_height() // 2
+        ))
+
     pygame.display.flip()
 
 
