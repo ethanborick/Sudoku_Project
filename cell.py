@@ -47,7 +47,7 @@ class Cell:
         if self.selected:
             pygame.draw.rect(
                 self.screen,
-                (255, 0, 0),  # Red color
+                (255, 0, 0),
                 (
                     self.col * SMALL_SQUARE_SIZE,
                     self.row * SMALL_SQUARE_SIZE,

@@ -53,7 +53,7 @@ def starting_screen():
 
         text = FONT.render(diff.upper(), True, (255, 255, 255))
         screen.blit(text, (
-        rect.x + rect.width // 2 - text.get_width() // 2, rect.y + rect.height // 2 - text.get_height() // 2))
+            rect.x + rect.width // 2 - text.get_width() // 2, rect.y + rect.height // 2 - text.get_height() // 2))
         rendered_buttons.append((rect, diff.lower()))
 
     pygame.display.flip()
